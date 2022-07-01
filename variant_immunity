@@ -1,0 +1,31 @@
+# variant_immunity
+
+# The dataset for the analysis is available at the linked preprint/publication
+# read in packages
+library(readxl)
+library(ggplot2)
+library(lmtest)
+library(gvlma)
+library(dplyr)
+library(ggrepel)
+library(ggpubr)
+library(ggsci)
+library(tidyr)
+library(drda)
+library(tidyverse)
+library(stringr)
+
+# read in data
+dataFile_States <- "~/SupplementaryFile.xlsx"
+
+# Assessing Omicron takeover dynamics in Massachusetts (as an example)
+omicron_MA <- read_excel(dataFile_States, sheet = "%Omicron x Time", range = "B3:B12")
+modelMA <- drm(omicron_percent ~ weeks, fct = L.5(fixed=c(NA,0,100,NA,NA), names = c("Slope", "Lower Asymptote", "Upper Asymptote", "Inflection", "Hill")), data = omicron_MA)
+plot_modelMA <- plot(modelMA, xlab="Number of weeks since Omicron introduction", ylab="7-day Average % omicron variant", log = "", type = "all", lty=1, lwd=2, main="omicron variant takeover in Massachusetts")
+
+# Model Summaries/Parameters + Getting time to 10% and time to 50% values
+summary(modelMA)
+confint(modelMA)
+ED(modelMA, c(10,50), interval="delta")
+
+# Repeating for all states provides all the parameters for the subsequent analyses
