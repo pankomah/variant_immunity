@@ -16,7 +16,7 @@ library(tidyverse)
 library(stringr)
 
 # read in data
-dataFile_States <- "~/SupplementaryFile.xlsx"
+dataFile_States <- "~/Supplementary File.xlsx"
 
 # Assessing Omicron takeover dynamics in Massachusetts (as an example)
 omicron_MA <- read_excel(dataFile_States, sheet = "%Omicron x Time", range = "B3:B12")
@@ -29,3 +29,5 @@ confint(modelMA)
 ED(modelMA, c(10,50), interval="delta")
 
 # Repeating for all states provides all the parameters for the subsequent analyses
+
+# The data for measures of immunity are provided in the Supplementary File (in tabs %Deltaximmunity and %Omicronximmunity). Relationships between the measure sof variant takeover and immunity are computed as simple linear regressions
